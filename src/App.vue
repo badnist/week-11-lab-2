@@ -3,9 +3,8 @@ import { ref } from "vue"
 import allContacts from "./contacts.json"
 
 const initialContactsNum = 5
-// inicializar la lista displayedContacts con los primeros contactos
+
 const displayedContacts = ref(allContacts.slice(0, initialContactsNum))
-// quitar los primeros contactos de la lista nonDisplayedContacts
 let nonDisplayedContacts = allContacts.filter(
   (contact, index) => index > initialContactsNum
 )
@@ -17,25 +16,20 @@ const extractRandomContact = () => {
     return
   }
 
-  // coger un contacto aleatorio de la lista nonDisplayedContacts
   const randomIndex = Math.floor(Math.random() * remainingContactsNum)
   const randomContact = nonDisplayedContacts[randomIndex]
 
-  // quitar de la lista nonDisplayedContacts
   nonDisplayedContacts = nonDisplayedContacts.filter(
     (contact, index) => index !== randomIndex
   )
 
-  // añadir a la lista displayedContacts
   displayedContacts.value.push(randomContact)
 }
 
 const restoreContact = (id) => {
-  // añadir a la lista nonDisplayedContacts
   const contact = displayedContacts.value.find((contact) => contact.id === id)
   nonDisplayedContacts.push(contact)
 
-  // quitar de la lista displayedContacts
   displayedContacts.value = displayedContacts.value.filter(
     (contact) => contact.id !== id
   )
